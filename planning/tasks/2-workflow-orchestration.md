@@ -17,6 +17,7 @@ This document provides a detailed breakdown of tasks for implementing the Workfl
     - A design document (e.g., `communication_protocol.md`) detailing chosen protocols, message schema, and error recovery strategies.
   - **Acceptance Criteria:**  
     - The document is reviewed and approved by the architecture team, ensuring it meets requirements for scalability and reliability.
+- **Status:** Completed. The `communication_protocol.md` file outlines the chosen protocols, message schema, and error recovery strategies, and has been reviewed.
 
 ### Task 2: Develop Inter-Agent Messaging System
 - **Action Items:**
@@ -57,6 +58,7 @@ This document provides a detailed breakdown of tasks for implementing the Workfl
     - A chaining module (e.g., `/orchestration/task_chaining.py`) with clear API documentation.
   - **Acceptance Criteria:**  
     - Test cases confirm that the chaining logic correctly handles multiple scenarios, including edge cases and failure conditions.
+- **Status:** Completed. The `ChainedTask` implementation supports dynamic chaining with conditional logic and fallback flows, and has been validated with unit tests.
 
 ### Task 2: Workflow Monitoring and Visualization
 - **Action Items:**
@@ -68,6 +70,7 @@ This document provides a detailed breakdown of tasks for implementing the Workfl
     - A monitoring module (e.g., `/orchestration/monitoring.py`) and a basic UI dashboard prototype.
   - **Acceptance Criteria:**  
     - The dashboard displays workflow states accurately, and logs are accessible for troubleshooting and performance analysis.
+- **Status:** Completed. The `WorkflowMonitor` tracks task states, logs state changes, and has been validated with unit tests.
 
 ---
 
