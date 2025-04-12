@@ -1,0 +1,117 @@
+{
+  "agents": [
+    {
+      "type": "DataFetcherAgent",
+      "name": "web_data_fetcher",
+      "role": "data_collector",
+      "settings": {
+        "data_source": "web_api",
+        "data_format": "json",
+        "base_url": "https://api.example.com/data",
+        "timeout": 30,
+        "headers": {
+          "content-type": "application/json",
+          "user-agent": "Beluga/1.0"
+        }
+      },
+      "max_retries": 3,
+      "retry_delay": 5,
+      "dependencies": [],
+      "description": "Fetches data from web APIs and converts to standard format"
+    },
+    {
+      "type": "AnalyzerAgent",
+      "name": "sentiment_analyzer",
+      "role": "data_processor",
+      "settings": {
+        "analysis_type": "sentiment",
+        "language": "en",
+        "threshold": 0.75,
+        "nlp_model": "transformer_base"
+      },
+      "max_retries": 2,
+      "retry_delay": 3,
+      "dependencies": ["web_data_fetcher"],
+      "description": "Analyzes text data for sentiment and key phrases"
+    },
+    {
+      "type": "DecisionMakerAgent",
+      "name": "content_recommender",
+      "role": "decision_maker",
+      "settings": {
+        "decision_rules": {
+          "positive_threshold": 0.6,
+          "negative_threshold": -0.4,
+          "neutral_range": [-0.4, 0.6],
+          "min_confidence": 0.65
+        },
+        "priority_categories": ["news", "entertainment", "technology"],
+        "personalization_enabled": true
+      },
+      "max_retries": 1,
+      "retry_delay": 2,
+      "dependencies": ["sentiment_analyzer"],
+      "description": "Makes content recommendations based on analysis results"
+    },
+    {
+      "type": "ExecutorAgent",
+      "name": "notification_executor",
+      "role": "action_taker",
+      "settings": {
+        "action": "send_notification",
+        "target": "email_service",
+        "templates_path": "/templates/notifications",
+        "throttle_rate": 10,
+        "default_priority": "medium"
+      },
+      "max_retries": 5,
+      "retry_delay": 10,
+      "dependencies": ["content_recommender"],
+      "description": "Sends notifications based on recommendations"
+    },
+    {
+      "type": "MonitorAgent",
+      "name": "system_monitor",
+      "role": "system_monitor",
+      "settings": {
+        "interval_seconds": 60,
+        "monitor_targets": ["web_data_fetcher", "sentiment_analyzer", "content_recommender", "notification_executor"],
+        "alert_thresholds": {
+          "error_count": 5,
+          "cpu_usage": 80,
+          "memory_use": 1024
+        }
+      },
+      "max_retries": 0,
+      "retry_delay": 0,
+      "dependencies": [],
+      "description": "Monitors system performance and agent health status"
+    }
+  ],
+  "default_settings": {
+    "max_retries": 3,
+    "retry_delay": 5,
+    "log_level": "info",
+    "health_check_interval": 300
+  },
+  "logging": {
+    "console_enabled": true,
+    "file_enabled": true,
+    "log_directory": "/logs",
+    "level": "info",
+    "enable_colors": true,
+    "timestamp_format": "2006-01-02T15:04:05.000Z07:00"
+  },
+  "health_check": {
+    "enabled": true,
+    "interval": 60,
+    "timeout": 10,
+    "alert_endpoints": ["slack", "email"]
+  },
+  "workflow": {
+    "default_execution_mode": "sequential",
+    "monitor_enabled": true,
+    "auto_recovery": true,
+    "max_parallel_tasks": 5
+  }
+}
